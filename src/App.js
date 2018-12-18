@@ -4,7 +4,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MuiRoot from "./withMui";
 
 import "./App.css";
-import IndexPage from "./routes/Index";
+import { AuthRoute, UserApp } from "./routes/Index";
 import ProfilePage from "./routes/Profile";
 import {
   withStyles,
@@ -23,7 +23,8 @@ const styles = theme => {
 
 class App extends Component {
   state = {
-    drawerOpened: false
+    drawerOpened: false,
+    isAuthenticated: false
   };
 
   render() {
@@ -45,8 +46,15 @@ class App extends Component {
         </Drawer>
         <BrowserRouter>
           <div className="content">
-            <Route path="/profile" component={ProfilePage} />
-            <Route path="/" exact component={IndexPage} />
+            <Route path="/register" component={ProfilePage} />
+            <AuthRoute
+              path="/"
+              userApp={UserApp}
+              isAuthenticated={this.state.isAuthenticated}
+              onAuthSuccess={() => {
+                this.setState({ isAuthenticated: true });
+              }}
+            />
           </div>
         </BrowserRouter>
       </div>
