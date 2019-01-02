@@ -78,6 +78,12 @@ class SignupPage extends Component {
 
 const StyledSignup = withStyles(styles)(SignupPage);
 
+/**
+ * This is an example of a Route using render prop to render the view on match.
+ *
+ * Documentation about the different ways of rendering `Route` views
+ * https://reacttraining.com/react-router/core/api/Route/route-render-methods
+ */
 export const AuthRoute = ({ userApp: Component, ...routeProps }) => (
   <Route
     {...routeProps}
@@ -97,9 +103,9 @@ const Game = () => <div> this is a game </div>;
 export const UserApp = appProps => (
   <BrowserRouter>
     <div className="app-page">
-      <Route path="/join" component={JoinGame} />
+      <Route path="/lobby" component={JoinGame} />
       <Route path="/game/:id" component={Game} />
-      <Route path="/" exact render={props => <Redirect to="/join" />} />
+      <Route path="/" exact render={props => <Redirect to="/lobby" />} />
     </div>
   </BrowserRouter>
 );
