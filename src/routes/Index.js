@@ -3,8 +3,6 @@ import { BrowserRouter, Redirect, Route } from "react-router-dom";
 import Smiley from "@material-ui/icons/SentimentSatisfiedAlt";
 import { withStyles, Button, TextField } from "@material-ui/core";
 
-import JoinGame from "./Join";
-
 const styles = theme => ({
   form: {
     background: theme.palette.secondary.light,
@@ -101,11 +99,9 @@ export const AuthRoute = ({ userApp: Component, ...routeProps }) => (
 const Game = () => <div> this is a game </div>;
 
 export const UserApp = appProps => (
-  <BrowserRouter>
-    <div className="app-page">
-      <Route path="/lobby" component={JoinGame} />
-      <Route path="/game/:id" component={Game} />
-      <Route path="/" exact render={props => <Redirect to="/lobby" />} />
-    </div>
-  </BrowserRouter>
+  <div className="app-page">
+    {/* <Route path="/lobby" component={JoinGame} /> */}
+    <Route path="/game/:id" component={Game} />
+    <Route path="/" exact component={() => <Redirect to="/lobby" />} />
+  </div>
 );

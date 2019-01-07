@@ -4,8 +4,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MuiRoot from "./withMui";
 
 import "./App.css";
-import { AuthRoute, UserApp } from "./routes/Index";
-import ProfilePage from "./routes/Profile";
+import { UserApp } from "./routes/Index";
+import LobbyPage from "./routes/Lobby";
 import {
   withStyles,
   IconButton,
@@ -46,22 +46,8 @@ class App extends Component {
         </Drawer>
         <BrowserRouter>
           <div className="content">
-            <Route path="/register" component={ProfilePage} />
-            {/**
-             * Design discussion:
-             * The AuthRoute component here handles the verification
-             * of the users credentials and if the user is not authenticated
-             * redirects her/him to the register/login page.
-             * What are the potential issues with this design?
-             */}
-            <AuthRoute
-              path="/"
-              userApp={UserApp}
-              isAuthenticated={this.state.isAuthenticated}
-              onAuthSuccess={() => {
-                this.setState({ isAuthenticated: true });
-              }}
-            />
+            <Route path="/lobby" component={LobbyPage} />
+            <Route exact path="/" component={UserApp} />
           </div>
         </BrowserRouter>
       </div>

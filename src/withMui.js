@@ -6,10 +6,11 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 // A theme with custom primary and secondary color.
 // It's optional.
+const primaryLight = purple[300];
 const theme = createMuiTheme({
   palette: {
     primary: {
-      light: purple[300],
+      light: primaryLight,
       main: purple[500],
       dark: purple[700]
     },
@@ -21,7 +22,26 @@ const theme = createMuiTheme({
   },
   typography: {
     useNextVariants: true
-  }
+  },
+  overrides: {
+    MuiCardHeader: {
+      root: {
+        backgroundColor: primaryLight
+      }
+    },
+    MuiCardContent: {
+      root: {
+        display: "flex",
+        flexDirection: "column"
+      }
+    },
+    MuiCardActions: {
+      root: {
+        justifyContent: "flex-end"
+      }
+    }
+  },
+  props: {}
 });
 
 function withRoot(Component) {
