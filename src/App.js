@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import MuiRoot from "./withMui";
@@ -21,52 +21,48 @@ const styles = theme => {
   };
 };
 
-class App extends Component {
-  state = {
-    drawerOpened: false,
-    isAuthenticated: false
-  };
+function App() {
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  render() {
-    return (
-      <div className="App">
-        <IconButton
-          className="menu-button"
-          onClick={e => this.setState({ drawerOpened: true })}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Drawer
-          variant="temporary"
-          open={this.state.drawerOpened}
-          onClose={e => this.setState({ drawerOpened: false })}
-        >
-          <Typography variant="h6">React Training</Typography>
-          <div>This is the drawer</div>
-        </Drawer>
-        <BrowserRouter>
-          <div className="content">
-            <Route path="/register" component={ProfilePage} />
-            {/**
+  return (
+    <div className="App">
+      <IconButton
+        className="menu-button"
+        onClick={e => setDrawerOpened(true)}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer
+        variant="temporary"
+        open={drawerOpened}
+        onClose={e => setDrawerOpened(false)}
+      >
+        <Typography variant="h6">React Training</Typography>
+        <div>This is the drawer</div>
+      </Drawer>
+      <BrowserRouter>
+        <div className="content">
+          <Route path="/register" component={ProfilePage} />
+          {/**
              * Design discussion:
              * The AuthRoute component here handles the verification
              * of the users credentials and if the user is not authenticated
              * redirects her/him to the register/login page.
              * What are the potential issues with this design?
              */}
-            <AuthRoute
-              path="/"
-              userApp={UserApp}
-              isAuthenticated={this.state.isAuthenticated}
-              onAuthSuccess={() => {
-                this.setState({ isAuthenticated: true });
-              }}
-            />
-          </div>
-        </BrowserRouter>
-      </div>
-    );
-  }
+          <AuthRoute
+            path="/"
+            userApp={UserApp}
+            isAuthenticated={isAuthenticated}
+            onAuthSuccess={() => {
+              setIsAuthenticated(true)
+            }}
+          />
+        </div>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 export default withStyles(styles)(MuiRoot(App));
