@@ -6,7 +6,8 @@ import {
   IconButton,
   InputBase,
   Icon,
-  Avatar
+  Avatar,
+  TextField
 } from "@material-ui/core";
 
 const styles = theme => {
@@ -23,72 +24,67 @@ const styles = theme => {
       display: "flex",
       alignItems: "center",
       justifyItems: "center"
+    },
+    selectedAvatar: {
+      border: "2px solid blue"
     }
   };
 };
 
 function ChooseAvatar(props) {
   const { classes } = props;
-  console.log(classes);
+  const [selectedAvatar, setSelectedAvatar] = useState("a0");
   return (
     <>
       <div className="left">
         <div className="landing__blurb-title">You!</div>
         <div className="landing__blurb">Choose an avatar for your profile</div>
       </div>
-      <div className="right">
-        <div className="avatar__container">
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a1@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a2@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a3@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a4@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a5@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a6@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a7@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a8@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a9@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a10@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <Avatar
-            src="https://api.adorable.io/avatars/200/a11@adorable.io.png"
-            className={classes.bigAvatar}
-          />
-          <div className={[classes.bigAvatar, classes.uploadPhoto]}>
-            Upload Photo
+      <div className="right profile-container">
+        <div className="avatar-container">
+          <div className="input-label">
+            Avatar
           </div>
+          <div className="select-avatar register__input-field">
+            {Array.from({ length: 15 }).map((v, i) => {
+              const avatarName = `a${i}`;
+              const isSelected = avatarName == selectedAvatar ? true : false;
+              let classNames = `${classes.bigAvatar}`;
+              if (isSelected) {
+                classNames = ` ${classNames} ${classes.selectedAvatar}`;
+              }
+              return (
+                <Avatar
+                  src={`https://api.adorable.io/avatars/200/${avatarName}@adorable.io.png`}
+                  className={classNames}
+                  onClick={() => {
+                    setSelectedAvatar(avatarName);
+                  }}
+                />
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <div className="register__input-label register__input-username-label">
+            Bio
+          </div>
+          <div className="register__input-field">
+            <InputBase multiline className="register__input textarea"  rows="2" margin="normal" />
+            <IconButton
+              className="register__submit-button"
+              onClick={e => this.submitJoinRequest()}
+            >
+              <NavigateNext/>
+            </IconButton>
+          </div>
+
+          {/* <IconButton
+            className="register__submit-button"
+            onClick={e => this.submitJoinRequest()}
+          >
+            <NavigateNext />
+          </IconButton> */}
         </div>
       </div>
     </>

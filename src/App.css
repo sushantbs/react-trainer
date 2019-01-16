@@ -70,7 +70,7 @@
 }
 
 .landing__blurb {
-  color:  #A3AEC2;
+  color: #a3aec2;
   opacity: 0.5;
   font-weight: 600 !important;
   font-size: 23px !important;
@@ -81,7 +81,8 @@
 .register__input-container {
 }
 
-.register__input-label {
+.register__input-label,
+.input-label {
   color: #232833;
   text-transform: uppercase;
   letter-spacing: 0.15em;
@@ -91,7 +92,8 @@
   margin-bottom: 16px;
 }
 
-.register__input input {
+.register__input input,
+.register__input textarea:last-child {
   background: transparent;
   padding: 0.25rem 0;
   padding-left: 1.25rem;
@@ -112,7 +114,7 @@
 
 .register__input-field .register__input-icon {
   font-size: 62px;
-  color: #2B303D;
+  color: #2b303d;
 }
 
 .register__input-field .register__submit-button {
@@ -121,11 +123,37 @@
   background-color: white;
 }
 
-.register__input-field:not(:last-child){
+.register__input-field:not(:last-child) {
   margin-bottom: 48px;
 }
 
 .avatar__container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.select-avatar {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.textarea:last-child {
+  background: transparent;
+  padding: 0.25rem 0;
+  padding-left: 1.25rem;
+  display: block;
+  box-sizing: border-box;
+  color: #2b303d;
+  letter-spacing: 0.02rem;
+  font-size: 69px !important;
+  font-family: "GT Eesti Display" !important;
+  font-weight: 700 !important;
 }
