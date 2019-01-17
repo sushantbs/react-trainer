@@ -22,6 +22,8 @@ import {
 import SvgIcon from "@material-ui/core/SvgIcon";
 import Register from "./Register.js";
 import ChooseAvatar from "./ChooseAvatar";
+import ChoosePath from "./ChoosePath";
+
 
 const styles = theme => {
   return {
@@ -35,7 +37,8 @@ function App() {
 
   return (
     <div className="main-container">
-      <ChooseAvatar/>
+      <ChoosePath/>
+      {/* <ChooseAvatar/> */}
       {/* <Register/> */}
     </div>
   );

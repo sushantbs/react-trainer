@@ -44,7 +44,7 @@
   width: 50%;
 }
 
-.main-container .left {
+.main-container .left, .info-container {
   background-color: #2c303c;
   display: flex;
   flex-direction: column;
@@ -53,7 +53,7 @@
   padding: 70px;
 }
 
-.main-container .right {
+.main-container .right, .user-input-container {
   background-color: #28d8cc;
   display: flex;
   align-items: center;
@@ -156,4 +156,11 @@
   font-size: 69px !important;
   font-family: "GT Eesti Display" !important;
   font-weight: 700 !important;
+}
+
+
+.root-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 8%;
+  background: #232833;
 }
