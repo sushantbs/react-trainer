@@ -1,81 +1,111 @@
 import React, { useState } from "react";
-import NavigateNext from "@material-ui/icons/NavigateNext";
-import MuiRoot from "./withMui";
+import ArrowForward from "@material-ui/icons/ArrowForward";
+import CheckCircle from "@material-ui/icons/CheckCircle";
 import {
-  withStyles,
   IconButton,
   InputBase,
   Icon,
-  Avatar,
-  TextField,
   Select,
   MenuItem
 } from "@material-ui/core";
-
-const styles = theme => {
-  return {
-    bigAvatar: {
-      margin: 10,
-      width: 100,
-      height: 100,
-      border: "2px solid #F8F8F8",
-      boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.1)"
-    },
-    uploadPhoto: {
-      borderRadius: "50%",
-      display: "flex",
-      alignItems: "center",
-      justifyItems: "center"
-    },
-    selectedAvatar: {
-      border: "2px solid blue"
-    }
-  };
-};
+import { withRouter } from "react-router";
 
 function ChoosePath(props) {
-  const { classes } = props;
-  const [selectedAvatar, setSelectedAvatar] = useState("a0");
+  const { history } = props;
+  const [selectedPath, setSelectedPath] = useState("access_key");
+  const [accessKey, setAccessKey] = useState("");
+  const [game, setGame] = useState("");
   return (
     <>
       <div className="root-container">
         <div className="info-container">
-          <div className="landing__blurb-title">Path!</div>
-          <div className="landing__blurb">Choose your path</div>
+          <div className="landing__blurb-title">Path</div>
+          <div className="landing__blurb">Choose a path</div>
         </div>
-        <div className="profile-container user-input-container">
-          <div className="avatar-container">
+        <div className="user-input-container">
+          <div
+            className={
+              selectedPath === "access_key"
+                ? "user-input-container__top selected"
+                : "user-input-container__top"
+            }
+            onClick={() => {
+              setSelectedPath("access_key");
+            }}
+          >
+            <div className="user-input-container-heading">
+              Enter access key to join an already existing team
+            </div>
             <div className="input-label">Access Key</div>
-            <div className="select-avatar register__input-field">
-              <Icon className="register__input-icon">vpn_key</Icon>
+            <div className="user-input-field">
+              <Icon className="user-input-icon">vpn_key</Icon>
               <InputBase
-                autofocus={true}
+                autoFocus={true}
                 autoComplete="off"
-                className="register__input register__input-usename"
-                placeholder="Joe"
+                className="user-input-text"
+                placeholder="99999"
+                value={accessKey}
+                onChange={event => {
+                  setAccessKey(event.target.value);
+                }}
               />
+              <IconButton className="">
+                <CheckCircle className="action__check-circle" />
+              </IconButton>
             </div>
           </div>
-          <div className="avatar-container">
+          <div className="user-input-divider">
+            <div>OR</div>
+          </div>
+          <div
+            className={
+              selectedPath === "create_game"
+                ? "user-input-container__bottom selected"
+                : "user-input-container__bottom"
+            }
+            onClick={() => {
+              setSelectedPath("create_game");
+            }}
+          >
+            <div className="user-input-container-heading">Create a game </div>
             <div className="input-label">Create</div>
-            <div className="select-avatar register__input-field">
-              <Icon className="register__input-icon">add</Icon>
-              <Select displayEmpty name="age">
+            <div className="user-input-field">
+              <Icon className="user-input-icon">add</Icon>
+              <Select displayEmpty name="game" value={game} onChange={(event) => {
+                setGame(event.target.value);
+              }}>
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Game1</MenuItem>
-                <MenuItem value={20}>Game2</MenuItem>
+                <MenuItem value={"game1"}>Game1</MenuItem>
+                <MenuItem value={"game2"}>Game2</MenuItem>
               </Select>
+              <IconButton className="">
+                <CheckCircle className="action__check-circle" />
+              </IconButton>
             </div>
           </div>
         </div>
         <div className="action-container">
+          <div className="action__submit-label">NEXT</div>
           <IconButton
-            className="register__submit-button"
-            onClick={e => this.submitJoinRequest()}
+            className="action__submit-button"
+            onClick={e => {
+              console.log(selectedPath);
+              if(selectedPath === "access_key"){
+                let dataToSend =  accessKey;
+                console.log(dataToSend);
+                //save data call
+                history.push("/profile");
+              } else if(selectedPath === "create_game"){
+                let dataToSend =  game;
+                console.log(dataToSend);
+                //save data call
+                history.push("/profile");
+              }
+            }}
           >
-            <NavigateNext />
+            <ArrowForward className="action__arrow-forward-icon" />
           </IconButton>
         </div>
       </div>
@@ -83,4 +113,4 @@ function ChoosePath(props) {
   );
 }
 
-export default withStyles(styles)(MuiRoot(ChoosePath));
+export default withRouter(ChoosePath);

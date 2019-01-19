@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import NavigateNext from "@material-ui/icons/NavigateNext";
-import MuiRoot from "./withMui";
+import ArrowForward from "@material-ui/icons/ArrowForward";
+import CheckCircle from "@material-ui/icons/CheckCircle";
 import {
-  withStyles,
   IconButton,
   InputBase,
-  Icon,
   Avatar,
-  TextField
+  withStyles
 } from "@material-ui/core";
+import { withRouter } from "react-router";
+import MuiRoot from "./withMui";
 
 const styles = theme => {
   return {
@@ -32,63 +32,79 @@ const styles = theme => {
 };
 
 function ChooseAvatar(props) {
-  const { classes } = props;
+  const { classes, history } = props;
+  const [bio, setBio] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("a0");
   return (
     <>
-      <div className="left">
-        <div className="landing__blurb-title">You!</div>
-        <div className="landing__blurb">Choose an avatar for your profile</div>
-      </div>
-      <div className="right profile-container">
-        <div className="avatar-container">
-          <div className="input-label">
-            Avatar
-          </div>
-          <div className="select-avatar register__input-field">
-            {Array.from({ length: 15 }).map((v, i) => {
-              const avatarName = `a${i}`;
-              const isSelected = avatarName == selectedAvatar ? true : false;
-              let classNames = `${classes.bigAvatar}`;
-              if (isSelected) {
-                classNames = ` ${classNames} ${classes.selectedAvatar}`;
-              }
-              return (
-                <Avatar
-                  src={`https://api.adorable.io/avatars/200/${avatarName}@adorable.io.png`}
-                  className={classNames}
-                  onClick={() => {
-                    setSelectedAvatar(avatarName);
-                  }}
-                />
-              );
-            })}
+      <div className="root-container">
+        <div className="info-container">
+          <div className="landing__blurb-title">You!</div>
+          <div className="landing__blurb">
+            Choose an avatar and set a bio for your profile
           </div>
         </div>
-        <div>
-          <div className="register__input-label register__input-username-label">
-            Bio
+        <div className="user-input-container user-input-container-profile-page">
+          <div className="user-input-container__top">
+            <div className="input-label">Avatar</div>
+            <div className="user-input-field">
+              {Array.from({ length: 15 }).map((v, i) => {
+                const avatarName = `a${i}`;
+                const isSelected = avatarName === selectedAvatar ? true : false;
+                let classNames = `${classes.bigAvatar}`;
+                if (isSelected) {
+                  classNames = ` ${classNames} ${classes.selectedAvatar}`;
+                }
+                return (
+                  <Avatar
+                    key={`avatar-${i}`}
+                    src={`https://api.adorable.io/avatars/200/${avatarName}@adorable.io.png`}
+                    className={classNames}
+                    onClick={() => {
+                      setSelectedAvatar(avatarName);
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <div className="input-label">Bio</div>
+            <div className="user-input-field">
+              <InputBase
+                value={bio}
+                multiline
+                rows="2"
+                autoFocus={true}
+                onChange={(event) => {
+                  setBio(event.target.value)
+                }}
+              />
+              <IconButton className="">
+                <CheckCircle className="action__check-circle" />
+              </IconButton>
+            </div>
           </div>
-          <div className="register__input-field">
-            <InputBase multiline className="register__input textarea"  rows="2" margin="normal" />
-            <IconButton
-              className="register__submit-button"
-              onClick={e => this.submitJoinRequest()}
-            >
-              <NavigateNext/>
-            </IconButton>
-          </div>
-
-          {/* <IconButton
-            className="register__submit-button"
-            onClick={e => this.submitJoinRequest()}
+        </div>
+        <div className="action-container">
+          <div className="action__submit-label">START</div>
+          <IconButton
+            className="action__submit-button"
+            onClick={e => {
+              let dataToSend = {
+                bio: bio,
+                selectedAvatar: selectedAvatar
+              }
+              //save data call
+              console.log(dataToSend);
+              history.push("/game");
+            }}
           >
-            <NavigateNext />
-          </IconButton> */}
+            <ArrowForward className="action__arrow-forward-icon" />
+          </IconButton>
         </div>
       </div>
     </>
   );
 }
 
-export default withStyles(styles)(MuiRoot(ChooseAvatar));
+export default withStyles(styles)(MuiRoot(withRouter(ChooseAvatar)));
+
