@@ -31,7 +31,7 @@ const styles = theme => {
   };
 };
 
-function ChooseAvatar(props) {
+function Profile(props) {
   const { classes, history } = props;
   const [bio, setBio] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("a0");
@@ -106,5 +106,5 @@ function ChooseAvatar(props) {
   );
 }
 
-export default withStyles(styles)(MuiRoot(withRouter(ChooseAvatar)));
+export default withStyles(styles)(MuiRoot(withRouter(Profile)));
 

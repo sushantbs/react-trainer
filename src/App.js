@@ -5,7 +5,7 @@ import "./App.css";
 import {
   withStyles,
 } from "@material-ui/core";
-import ChooseAvatar from "./ChooseAvatar";
+import Profile from "./Profile";
 import ChoosePath from "./ChoosePath";
 
 const styles = theme => {
@@ -21,7 +21,7 @@ function App() {
     <BrowserRouter>
       <div className="main-container">
         <Route exact path="/" component={ChoosePath} />
-        <Route exact path="/profile" component={ChooseAvatar} />
+        <Route exact path="/profile" component={Profile} />
       </div>
     </BrowserRouter>
   );
