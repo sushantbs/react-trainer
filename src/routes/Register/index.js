@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
 import "./index.css";
 
 const joinRoomRequest = async accessKey => {
@@ -11,8 +12,7 @@ const joinRoomRequest = async accessKey => {
     body: JSON.stringify({ accessKey })
   });
 
-  const json = await response.json();
-  debugger;
+  return await response.json();
 };
 
 const createRoomRequest = async type => {
@@ -25,13 +25,13 @@ const createRoomRequest = async type => {
     body: JSON.stringify({ type })
   });
 
-  const json = await response.json();
-  debugger;
+  return await response.json();
 };
 
 export const Register = () => {
   const [accessKey, setAccessKey] = useState("");
   const [roomType, setRoomType] = useState("");
+  const [redirect, setRedirect] = useState("");
 
   return (
     <div className="register-container">
@@ -47,7 +47,12 @@ export const Register = () => {
           type="button"
           value="Join"
           disabled={accessKey.length !== 5}
-          onClick={e => joinRoomRequest(accessKey)}
+          onClick={async e => {
+            let response = await joinRoomRequest(accessKey);
+            if (response.accessKey) {
+              setRedirect("/profile");
+            }
+          }}
         />
       </div>
       <div className="create-game">
@@ -60,9 +65,15 @@ export const Register = () => {
           type="button"
           value="Join"
           disabled={!Boolean(roomType)}
-          onClick={e => createRoomRequest(roomType)}
+          onClick={async e => {
+            let response = await createRoomRequest(roomType);
+            if (response.accessKey) {
+              setRedirect("/profile");
+            }
+          }}
         />
       </div>
+      {redirect ? <Redirect to={redirect} /> : null}
     </div>
   );
 };
