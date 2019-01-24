@@ -1,0 +1,51 @@
+.register-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.join-game,
+.create-game {
+  flex-basis: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.join-game {
+  background-color: black;
+  color: white;
+}
+
+.create-game {
+  background-color: white;
+  color: black;
+}
+
+.join-game input,
+.create-game input,
+.create-game select {
+  width: 50%;
+  min-width: 100px;
+  max-width: 300px;
+  margin: 5px;
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+  border-radius: 4px;
+}
+
+input[type="button"] {
+  background-color: #0099ff;
+  border-color: #0099ff;
+  cursor: pointer;
+}
+
+input[type="button"]:disabled {
+  background-color: #aaaaaa;
+  border-color: #aaaaaa;
+}
