@@ -51,7 +51,7 @@
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  padding: 70px;
+  padding: 40px;
 }
 
 .main-container .right {
@@ -62,7 +62,7 @@
   justify-content: center;
 }
 
-.user-input-container:not(.user-input-container-profile-page ) {
+.user-input-container:not(.user-input-container-profile-page) {
   display: grid;
   grid-template-rows: 1fr 128px 128px 1fr;
   grid-template-columns: 1fr;
@@ -75,14 +75,11 @@
 
 .user-input-container.user-input-container-profile-page {
   background-color: #2c303c;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
-
-
-
 
 .landing__blurb-title {
   font-weight: bold;
@@ -225,9 +222,7 @@
   grid-row-end: 3;
   grid-column-start: 1;
   grid-column-end: 2;
-  padding-left: 70px;
-  padding-right: 70px;
-  padding-top: 70px;
+  padding: 40px;
   background-color: #2c303c;
 }
 
@@ -265,7 +260,6 @@
   font-size: 32px;
 }
 
-
 .user-input-container-heading {
   font-size: 48px !important;
   line-height: 55px;
@@ -285,7 +279,7 @@
 }
 
 .input-label {
-  color: #9BB5C4;
+  color: #9bb5c4;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   font-size: 14px;
@@ -294,13 +288,14 @@
   margin-bottom: 16px;
 }
 
-.user-input-text input, .user-input-field textarea {
+.user-input-text input,
+.user-input-field textarea {
   background: transparent;
   padding: 0.25rem 0;
   padding-left: 1.25rem;
   display: block;
   box-sizing: border-box;
-  color: #A3AEC2;
+  color: #a3aec2;
   letter-spacing: 0.02rem;
   font-size: 69px !important;
   line-height: 76px;
@@ -308,14 +303,14 @@
   font-weight: 700 !important;
 }
 
-
 .user-input-container .user-input-icon {
   font-size: 62px;
   color: #fff;
 }
 
-.user-input-container__top.selected, .user-input-container__bottom.selected {
-  outline: 8px solid #28D8CC;
+.user-input-container__top.selected,
+.user-input-container__bottom.selected {
+  outline: 8px solid #28d8cc;
 }
 
 .user-input-container-profile-page .user-input-field {

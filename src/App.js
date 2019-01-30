@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import MuiRoot from "./withMui";
-import "./App.css";
 import { withStyles } from "@material-ui/core";
 import { Game } from "./routes/Game";
-import Profile from "./Profile";
-import ChoosePath from "./ChoosePath";
+import Profile from "./routes/Profile";
 import { Register } from "./routes/Register";
+import io from "socket.io-client";
+
+import "./App.css";
 
 const styles = theme => {
   return {
@@ -14,27 +15,56 @@ const styles = theme => {
   };
 };
 
-const checkUserStatus = async setStatusCheckComplete => {
+let socket = null;
+
+const connectSocket = playerId => {
+  socket = io("/", {
+    path: "/api/socket"
+  });
+
+  socket.on("turn", () => {
+    debugger;
+  });
+  socket.on("chat", () => {
+    debugger;
+  });
+};
+
+const checkUserStatus = async (setStatusCheckComplete, setRedirect) => {
   let response = await fetch("/api/status", {
     credentials: "same-origin"
   });
 
   let json = await response.json();
+
   setStatusCheckComplete(true);
-  if (!json.accessKey) {
-    window.history.pushState(null, "", "/choose");
+  if (json.status === "guest") {
+    setRedirect("/choose");
+  } else if (!json.handle) {
+    setRedirect("/profile");
   } else {
-    window.history.pushState(null, "", "/profile");
+    setRedirect("/game/home");
   }
 };
 
 function App() {
-  let [player, setPlayer] = useState(null);
-  let [statusCheckComplete, setStatusCheckComplete] = useState(false);
+  const [player, setPlayer] = useState(null);
+  const [redirect, setRedirect] = useState(null);
+  const [statusCheckComplete, setStatusCheckComplete] = useState(false);
+
+  const [players, setPlayers] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const [gameState, setGameState] = useState(null);
+
+  const gameProps = {
+    players,
+    messages,
+    gameState
+  };
 
   useEffect(() => {
     if (!statusCheckComplete) {
-      checkUserStatus(setStatusCheckComplete);
+      checkUserStatus(setStatusCheckComplete, setRedirect);
     }
   }, []);
 
@@ -43,8 +73,9 @@ function App() {
       {statusCheckComplete ? (
         <div className="main-container">
           <Route path="/profile" render={() => <Profile />} />
-          <Route path="/game" render={() => <Game />} />
+          <Route path="/game" render={() => <Game {...gameProps} />} />
           <Route path="/choose" render={() => <Register />} />
+          {redirect ? <Redirect to={redirect} /> : null}
         </div>
       ) : (
         <div> Checking user status </div>
