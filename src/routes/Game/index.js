@@ -2,12 +2,16 @@ import React from "react";
 import {
   HomeOutlined,
   ChatBubbleOutlined,
-  PersonOutlined
+  PersonOutlined,
+  PowerSettingsNewOutlined
 } from "@material-ui/icons";
 import { Link, Route } from "react-router-dom";
 import "./index.css";
+import { Chat } from "./chat";
+import { Leave } from "./leave";
+import { Players } from "./players";
 
-export const Game = ({ messages, players, gameState }) => {
+export const Game = props => {
   return (
     <div className="game-container">
       <div className="tab-container">
@@ -26,21 +30,20 @@ export const Game = ({ messages, players, gameState }) => {
             <PersonOutlined className="tab-icon" />
           </Link>
         </div>
+        <div className="tab">
+          <Link className="link" to="/game/leave">
+            <PowerSettingsNewOutlined className="tab-icon" />
+          </Link>
+        </div>
       </div>
       <div className="tab-content">
         <Route path="/game/home" render={() => <div>Home</div>} />
+        <Route path="/game/chat" render={() => <Chat {...props} />} />
+        <Route path="/game/players" render={() => <Players {...props} />} />
         <Route
-          path="/game/chat"
-          render={() => (
-            <div className="tab-content-sleeve">
-              <h2>Chat</h2>
-              {messages.map(message => (
-                <div key={message.id}>{message}</div>
-              ))}
-            </div>
-          )}
+          path="/game/leave"
+          render={() => <Leave onLeave={props.onLeave} />}
         />
-        <Route path="/players" render={() => <div>Players</div>} />
       </div>
     </div>
   );

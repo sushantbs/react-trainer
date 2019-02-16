@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import ArrowForward from "@material-ui/icons/ArrowForward";
 import { IconButton, InputBase, Avatar, withStyles } from "@material-ui/core";
-import { Redirect } from "react-router-dom";
 import MuiRoot from "../../withMui";
 
 const styles = theme => {
@@ -39,11 +38,10 @@ const updateProfile = async (handle, avatar) => {
 };
 
 function Profile(props) {
-  const { classes } = props;
+  const { classes, history } = props;
 
   const [bio, setBio] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("a0");
-  const [redirect, setRedirect] = useState(null);
 
   return (
     <div className="root-container">
@@ -97,14 +95,13 @@ function Profile(props) {
           onClick={async e => {
             let response = await updateProfile(bio, selectedAvatar);
             if (response.handle === bio) {
-              setRedirect("/game");
+              history.push("/game/home");
             }
           }}
         >
           <ArrowForward className="action__arrow-forward-icon" />
         </IconButton>
       </div>
-      {redirect ? <Redirect to={redirect} /> : null}
     </div>
   );
 }

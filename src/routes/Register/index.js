@@ -28,7 +28,7 @@ const createRoomRequest = async type => {
   return await response.json();
 };
 
-export const Register = () => {
+export const Register = ({ onRegister }) => {
   const [accessKey, setAccessKey] = useState("");
   const [roomType, setRoomType] = useState("");
   const [redirect, setRedirect] = useState("");
@@ -50,6 +50,7 @@ export const Register = () => {
           onClick={async e => {
             let response = await joinRoomRequest(accessKey);
             if (response.accessKey) {
+              onRegister();
               setRedirect("/profile");
             }
           }}
