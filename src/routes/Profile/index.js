@@ -38,7 +38,7 @@ const updateProfile = async (handle, avatar) => {
 };
 
 function Profile(props) {
-  const { classes, history } = props;
+  const { classes, history, onProfileUpdate } = props;
 
   const [bio, setBio] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("a0");
@@ -95,6 +95,8 @@ function Profile(props) {
           onClick={async e => {
             let response = await updateProfile(bio, selectedAvatar);
             if (response.handle === bio) {
+              const { handle, id, avatar } = response;
+              onProfileUpdate({ handle, id, avatar });
               history.push("/game/home");
             }
           }}

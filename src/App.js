@@ -7,6 +7,8 @@ import { Game } from "./routes/game";
 import Profile from "./routes/profile";
 import io from "socket.io-client";
 
+import webrtc from "./components/webrtc";
+
 import "./App.css";
 
 const styles = theme => {
@@ -38,7 +40,7 @@ function App({ classes, history }) {
     }
   };
 
-  const connectSocket = playerId => {
+  const connectSocket = () => {
     if (!socket) {
       const connect = io("/", {
         path: "/api/socket"
@@ -58,6 +60,7 @@ function App({ classes, history }) {
 
       connect.on("connect", () => {
         setSocket(connect);
+        // initWebRTC();
       });
     }
   };
@@ -67,9 +70,26 @@ function App({ classes, history }) {
   const [socket, setSocket] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
   const [newMessage, setNewMessage] = useState(null);
+  const [webrtcHandle, setWebRTCHandle] = useState(null);
   // const [isConnected, setIsConnected] = useState(false);
   const [players, setPlayers] = useState([]);
   const [gameState, setGameState] = useState(null);
+  const [rtcReady, setRTCReady] = useState(false);
+  const [localStream, setLocalStream] = useState(null);
+  const [remoteStreams, setRemoteStreams] = useState([]);
+  const [newRemoteStream, addNewRemoteStream] = useState(null);
+  const [incomingRTCRequest, setIncomingRTCRequest] = useState(null);
+
+  const onRegister = () => {
+    if (!socket) {
+      connectSocket();
+    }
+  };
+
+  const onProfileUpdate = me => {
+    setMe(me);
+    // initWebRTC();
+  };
 
   const onMessage = message => {
     if (socket) {
@@ -91,19 +111,12 @@ function App({ classes, history }) {
     }
   };
 
-  const onRegister = () => {
-    if (!socket) {
-      connectSocket();
-    }
+  const onCallPlayer = async playerId => {
+    await webrtcHandle.call(playerId);
   };
 
-  const gameProps = {
-    players,
-    me,
-    chatMessages,
-    gameState,
-    onMessage,
-    onLeave
+  const onAnswerCall = async rtcRequest => {
+    await webrtcHandle.answerCall(rtcRequest);
   };
 
   useEffect(() => {
@@ -118,11 +131,55 @@ function App({ classes, history }) {
     }
   }, [newMessage]);
 
+  useEffect(() => {
+    if (
+      newRemoteStream &&
+      !remoteStreams.find(
+        stream => stream.playerId === newRemoteStream.playerId
+      )
+    ) {
+      setRemoteStreams([...remoteStreams, newRemoteStream]);
+    }
+  }, [newRemoteStream]);
+
+  useEffect(() => {
+    if (socket && me) {
+      setWebRTCHandle(
+        webrtc(socket, me, {
+          setRTCReady,
+          setLocalStream,
+          setIncomingRTCRequest,
+          addNewRemoteStream
+        })
+      );
+    }
+  }, [socket, me]);
+
+  const gameProps = {
+    players,
+    me,
+    chatMessages,
+    gameState,
+    onMessage,
+    onLeave,
+    onCallPlayer,
+    onAnswerCall,
+    rtcReady,
+    localStream,
+    remoteStreams,
+    incomingRTCRequest
+  };
+
   return (
     <>
       {authStatus === "complete" ? (
         <div className="main-container">
-          <Route path="/profile" render={props => <Profile {...props} />} />
+          <Route
+            path="/profile"
+            render={props => (
+              <Profile {...props} onProfileUpdate={onProfileUpdate} />
+            )}
+          />
           <Route path="/game" render={() => <Game {...gameProps} />} />
           <Route
             path="/choose"
