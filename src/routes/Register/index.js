@@ -30,8 +30,7 @@ const createRoomRequest = async type => {
 
 export const Register = ({ onRegister }) => {
   const [accessKey, setAccessKey] = useState("");
-  const [roomType, setRoomType] = useState("");
-  const [redirect, setRedirect] = useState("");
+  const [roomType, setRoomType] = useState("0");
 
   return (
     <div className="register-container">
@@ -51,7 +50,6 @@ export const Register = ({ onRegister }) => {
             let response = await joinRoomRequest(accessKey);
             if (response.accessKey) {
               onRegister();
-              setRedirect("/profile");
             }
           }}
         />
@@ -59,22 +57,22 @@ export const Register = ({ onRegister }) => {
       <div className="create-game">
         <header>Create a new game</header>
         <select value={roomType} onChange={e => setRoomType(e.target.value)}>
+          <option value="0">Select a Room</option>
           <option value="1">Room Type 1</option>
           <option value="2">Room Type 2</option>
         </select>
         <input
           type="button"
           value="Join"
-          disabled={!Boolean(roomType)}
+          disabled={!Boolean(roomType !== "0")}
           onClick={async e => {
             let response = await createRoomRequest(roomType);
             if (response.accessKey) {
-              setRedirect("/profile");
+              onRegister();
             }
           }}
         />
       </div>
-      {redirect ? <Redirect to={redirect} /> : null}
     </div>
   );
 };

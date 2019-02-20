@@ -24,19 +24,21 @@ function App({ classes, history }) {
       credentials: "same-origin"
     });
 
-    let json = await response.json();
+    const { status, accessKey, handle, avatar, id } = await response.json();
+
+    if (id && handle && avatar) {
+      setMe({ handle, avatar, id });
+    }
 
     setAuthStatus("complete");
-    if (json.status === "guest" || !json.accessKey) {
+
+    if (status === "guest" || !accessKey) {
       history.push("/choose");
-    } else if (!json.handle) {
+    } else if (!handle) {
       connectSocket();
       history.push("/profile");
     } else {
-      const { handle, avatar, id } = json;
-      setMe({ handle, avatar, id });
       connectSocket();
-      // TODO: If user is on / then redirect to /game/home
     }
   };
 
@@ -84,6 +86,12 @@ function App({ classes, history }) {
     if (!socket) {
       connectSocket();
     }
+
+    if (me) {
+      history.push("/game/home");
+    } else {
+      history.push("/profile");
+    }
   };
 
   const onProfileUpdate = me => {
@@ -120,10 +128,8 @@ function App({ classes, history }) {
   };
 
   useEffect(() => {
-    if (!authStatus) {
-      checkUserStatus();
-    }
-  });
+    checkUserStatus();
+  }, []);
 
   useEffect(() => {
     if (newMessage) {
@@ -180,10 +186,13 @@ function App({ classes, history }) {
               <Profile {...props} onProfileUpdate={onProfileUpdate} />
             )}
           />
-          <Route path="/game" render={() => <Game {...gameProps} />} />
+          <Route
+            path="/game"
+            render={props => <Game {...props} {...gameProps} />}
+          />
           <Route
             path="/choose"
-            render={() => <Register onRegister={onRegister} />}
+            render={props => <Register {...props} onRegister={onRegister} />}
           />
         </div>
       ) : (
