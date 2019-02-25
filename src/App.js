@@ -161,6 +161,12 @@ function App({ classes, history }) {
     }
   }, [socket, me]);
 
+  useEffect(() => {
+    if (me && socket) {
+      socket.emit("player", { ...me, rtcReady });
+    }
+  }, [rtcReady, me, socket]);
+
   const gameProps = {
     players,
     me,

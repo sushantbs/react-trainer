@@ -2,19 +2,16 @@ import React, { useState, useEffect } from "react";
 import { ArrowRightRounded } from "@material-ui/icons";
 import "./index.css";
 
-let playerMap;
-
-export function Chat({ chatMessages, me, players, onMessage }) {
+export function Chat({ chatMessages, me, players, onMessage, onRead }) {
   const [message, setMessage] = useState("");
-  const [statePlayers, setStatePlayers] = useState([]);
 
   useEffect(() => {
-    if (players !== statePlayers) {
-      setStatePlayers(players);
-      playerMap = new Map();
-      players.forEach(player => playerMap.set(player.id, player));
-    }
-  });
+    onRead(true);
+
+    return () => {
+      onRead(false);
+    };
+  }, []);
 
   return (
     <div className="tab-content-sleeve chat-room">
@@ -38,12 +35,12 @@ export function Chat({ chatMessages, me, players, onMessage }) {
             <img
               alt=""
               src={`https://api.adorable.io/avatars/36/${
-                playerMap.get(message.author).avatar
+                players.find(player => player.id === message.author).avatar
               }@adorable.io.png`}
             />
             <div className="message-text">
               <div className="author-handle">
-                {playerMap.get(message.author).handle}
+                {players.find(player => player.id === message.author).handle}
               </div>
               <span>{message.text}</span>
             </div>

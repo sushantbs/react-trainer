@@ -11,8 +11,9 @@ const webrtc = (
       }
     ]
   });
-  pc.onicecandidate = ({ candidate }) =>
+  pc.onicecandidate = ({ candidate }) => {
     socket.emit("icecandidate", { candidate });
+  };
 
   socket.on("icecandidate", async ({ candidate }) => {
     if (candidate) {
