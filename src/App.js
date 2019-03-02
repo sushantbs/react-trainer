@@ -4,6 +4,7 @@ import MuiRoot from "./withMui";
 import { withStyles } from "@material-ui/core";
 import { Register } from "./routes/register";
 import { Game } from "./routes/game";
+import { ThemePicker } from "./components/ThemePicker";
 import Profile from "./routes/profile";
 import io from "socket.io-client";
 
@@ -17,7 +18,8 @@ const styles = theme => {
   };
 };
 
-function App({ classes, history }) {
+function App(props) {
+  const { classes, history, onThemeChange, themeOptions } = props;
   const checkUserStatus = async () => {
     setAuthStatus("inprogress");
     let response = await fetch("/api/status", {
@@ -200,6 +202,15 @@ function App({ classes, history }) {
             path="/choose"
             render={props => <Register {...props} onRegister={onRegister} />}
           />
+          <div className="theme-picker-container">
+            <ThemePicker
+              options={themeOptions}
+              value={
+                themeOptions.find(({ theme }) => theme === props.theme).name
+              }
+              onChange={e => onThemeChange(e.target.value)}
+            />
+          </div>
         </div>
       ) : (
         <div> Checking user status </div>
@@ -208,4 +219,6 @@ function App({ classes, history }) {
   );
 }
 
-export default withStyles(styles)(MuiRoot(withRouter(App)));
+export default MuiRoot(
+  withRouter(withStyles(styles, { withTheme: true })(App))
+);

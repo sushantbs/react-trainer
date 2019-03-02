@@ -6,29 +6,8 @@
   flex-grow: 1;
 }
 
-.join-game,
-.create-game {
-  flex-basis: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.join-game {
-  background-color: black;
-  color: white;
-}
-
-.create-game {
-  background-color: white;
-  color: black;
-}
-
-.join-game input,
-.create-game input,
-.create-game select {
+input,
+select {
   width: 50%;
   min-width: 100px;
   max-width: 300px;
