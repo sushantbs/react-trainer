@@ -12,10 +12,12 @@ const themeOptions = [
     display: "Purple Green",
     theme: createMuiTheme({
       palette: {
+        type: "dark",
         primary: {
           light: purple[300],
           main: purple[500],
-          dark: purple[700]
+          dark: purple[700],
+          contrastText: "#fff"
         },
         secondary: {
           light: green[300],

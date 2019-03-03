@@ -12,6 +12,7 @@ const webrtc = (
     ]
   });
   pc.onicecandidate = ({ candidate }) => {
+    debugger;
     socket.emit("icecandidate", { candidate });
   };
 
@@ -37,6 +38,7 @@ const webrtc = (
   });
 
   pc.ontrack = ({ streams }) => {
+    debugger;
     addNewRemoteStream({
       stream: streams[0]
     });
@@ -46,6 +48,7 @@ const webrtc = (
     async call(playerId) {
       try {
         pc.onnegotiationneeded = async () => {
+          debugger;
           await pc.setLocalDescription(await pc.createOffer());
           socket.emit("rtcOffer", {
             offerBy: me.id,

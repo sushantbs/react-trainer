@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { CallRounded } from "@material-ui/icons";
-import { Card, Button } from "@material-ui/core";
+import { Card, CardHeader, Button } from "@material-ui/core";
 
 function renderLocalStreamVideo(onHangup, localRef) {
   return (
@@ -60,17 +60,22 @@ export function Players(props) {
       <div className="player-list">
         {players.map((player, index) => (
           <Card className="player-item" key={index}>
-            <div className="player-info">
-              <img
-                alt={player.handle}
-                src={`https://api.adorable.io/avatars/60/${
-                  player.avatar
-                }@adorable.io.png`}
-              />
-              <div className="player-details">
-                <h3>{player.handle}</h3>
-              </div>
-            </div>
+            <CardHeader
+              className="player-info"
+              avatar={
+                <img
+                  alt={player.handle}
+                  src={`https://api.adorable.io/avatars/60/${
+                    player.avatar
+                  }@adorable.io.png`}
+                />
+              }
+              title={
+                <div className="player-details">
+                  <h3>{player.handle}</h3>
+                </div>
+              }
+            />
             {rtcReady && player.rtcReady ? (
               <div className="player-comm">
                 <Button onClick={() => onCallPlayer(player.id)}>

@@ -5,6 +5,7 @@ import {
   PersonOutlined,
   PowerSettingsNewOutlined
 } from "@material-ui/icons";
+import { AppBar, Tabs, Tab, Badge } from "@material-ui/core";
 import { Link, Route } from "react-router-dom";
 import "./index.css";
 import { Chat } from "./chat";
@@ -17,9 +18,16 @@ export const Game = props => {
   const messageCount = chatMessages.length;
   const [readMessageCount, setReadMessageCount] = useState(0);
   const [chatActive, setChatActive] = useState(false);
+  const [tabValue, setTabValue] = useState(0);
 
-  const onChatRead = active => {
-    setChatActive(active);
+  const onChatRead = active => setChatActive(active);
+
+  const onTabChange = (e, value) => setTabValue(value);
+
+  const goToURL = url => {
+    if (window.location.pathname !== url) {
+      props.history.push(url);
+    }
   };
 
   useEffect(() => {
@@ -28,34 +36,57 @@ export const Game = props => {
     }
   });
 
+  useEffect(() => {
+    switch (tabValue) {
+      case 0:
+        goToURL("/game/home");
+        break;
+
+      case 1:
+        goToURL("/game/chat");
+        break;
+
+      case 2:
+        goToURL("/game/players");
+        break;
+
+      case 3:
+        goToURL("/game/leave");
+        break;
+
+      default:
+    }
+  }, [tabValue]);
+
   return (
     <div className="game-container">
       <div className="tab-container">
-        <div className="tab">
-          <Link className="link" to="/game/home">
-            <HomeOutlined className="tab-icon" />
-          </Link>
-        </div>
-        <div className="tab">
-          {messageCount - readMessageCount ? (
-            <div class="tab-notification">
-              {messageCount - readMessageCount}
-            </div>
-          ) : null}
-          <Link className="link" to="/game/chat">
-            <ChatBubbleOutlined className="tab-icon" />
-          </Link>
-        </div>
-        <div className="tab">
-          <Link className="link" to="/game/players">
-            <PersonOutlined className="tab-icon" />
-          </Link>
-        </div>
-        <div className="tab">
-          <Link className="link" to="/game/leave">
-            <PowerSettingsNewOutlined className="tab-icon" />
-          </Link>
-        </div>
+        <AppBar position="static" color="primary">
+          <Tabs
+            className="full-width-tabs"
+            variant="fullWidth"
+            centered={true}
+            onChange={onTabChange}
+            value={tabValue}
+          >
+            <Tab icon={<HomeOutlined className="tab-icon" />} />
+            <Tab
+              icon={<ChatBubbleOutlined className="tab-icon" />}
+              label={
+                messageCount - readMessageCount ? (
+                  <div className="tab-notification">
+                    <Badge
+                      badgeContent={messageCount - readMessageCount}
+                      color="secondary"
+                    />
+                  </div>
+                ) : null
+              }
+            />
+            <Tab icon={<PersonOutlined className="tab-icon" />} />
+            <Tab icon={<PowerSettingsNewOutlined className="tab-icon" />} />
+          </Tabs>
+        </AppBar>
       </div>
       <div className="tab-content">
         <Route path="/game/home" render={() => <div>Home</div>} />
