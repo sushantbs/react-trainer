@@ -6,7 +6,7 @@ import {
   PowerSettingsNewOutlined
 } from "@material-ui/icons";
 import { AppBar, Tabs, Tab, Badge } from "@material-ui/core";
-import { Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./index.css";
 import { Chat } from "./chat";
 import { Leave } from "./leave";

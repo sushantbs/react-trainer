@@ -19,7 +19,7 @@ const styles = theme => {
 };
 
 function App(props) {
-  const { classes, history, onThemeChange, themeOptions } = props;
+  const { history, onThemeChange, themeOptions } = props;
   const checkUserStatus = async () => {
     setAuthStatus("inprogress");
     let response = await fetch("/api/status", {
