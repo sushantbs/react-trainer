@@ -89,7 +89,10 @@ export const Game = props => {
         </AppBar>
       </div>
       <div className="tab-content">
-        <Route path="/game/home" render={() => <div>Home</div>} />
+        <Route
+          path="/game/home"
+          render={() => <h2>Access Key: {props.accessKey}</h2>}
+        />
         <Route
           path="/game/chat"
           render={() => <Chat {...props} onRead={onChatRead} />}

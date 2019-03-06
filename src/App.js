@@ -36,11 +36,14 @@ function App(props) {
 
     if (status === "guest" || !accessKey) {
       history.push("/choose");
-    } else if (!handle) {
-      connectSocket();
-      history.push("/profile");
     } else {
-      connectSocket();
+      setAccessKey(accessKey);
+      if (!handle) {
+        connectSocket();
+        history.push("/profile");
+      } else {
+        connectSocket();
+      }
     }
   };
 
@@ -70,6 +73,7 @@ function App(props) {
   };
 
   const [me, setMe] = useState(null);
+  const [accessKey, setAccessKey] = useState(null);
   const [authStatus, setAuthStatus] = useState(null);
   const [socket, setSocket] = useState(null);
   const [chatMessages, setChatMessages] = useState([]);
@@ -116,6 +120,7 @@ function App(props) {
     const json = await response.json();
 
     if (json.success) {
+      setAccessKey(null);
       history.go(-history.length);
       history.push("/choose");
     }
@@ -127,6 +132,10 @@ function App(props) {
 
   const onAnswerCall = async rtcRequest => {
     await webrtcHandle.answerCall(rtcRequest);
+  };
+
+  const onHangUp = () => {
+    webrtcHandle.endCall();
   };
 
   useEffect(() => {
@@ -172,12 +181,14 @@ function App(props) {
   const gameProps = {
     players,
     me,
+    accessKey,
     chatMessages,
     gameState,
     onMessage,
     onLeave,
     onCallPlayer,
     onAnswerCall,
+    onHangUp,
     rtcReady,
     localStream,
     remoteStreams,

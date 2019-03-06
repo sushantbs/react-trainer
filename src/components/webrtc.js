@@ -4,22 +4,22 @@ const webrtc = (
   { setRTCReady, setLocalStream, setIncomingRTCRequest, addNewRemoteStream }
 ) => {
   const constraints = { video: true };
-  let pc = new RTCPeerConnection({
-    iceServers: [
-      {
-        urls: "stun:stun.l.google.com:19302"
-      }
-    ]
-  });
+  // const servers = {
+  //   iceServers: [
+  //     {
+  //       urls: "stun:stun.l.google.com:19302"
+  //     }
+  //   ]
+  // };
+  const servers = null;
+  let pc = new RTCPeerConnection(servers);
   pc.onicecandidate = ({ candidate }) => {
-    debugger;
     socket.emit("icecandidate", { candidate });
   };
 
   socket.on("icecandidate", async ({ candidate }) => {
     if (candidate) {
       await pc.addIceCandidate(candidate);
-      setRTCReady(true);
     }
   });
 
@@ -38,11 +38,12 @@ const webrtc = (
   });
 
   pc.ontrack = ({ streams }) => {
-    debugger;
     addNewRemoteStream({
       stream: streams[0]
     });
   };
+
+  setRTCReady(true);
 
   return {
     async call(playerId) {
@@ -85,9 +86,10 @@ const webrtc = (
       setIncomingRTCRequest(null);
     },
 
-    onCallEnd() {
+    endCall() {
       pc.onnegotiationneeded = null;
       pc.ontrack = null;
+      pc.close && pc.close();
     },
     onCallConnect() {}
   };

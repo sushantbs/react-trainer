@@ -23,7 +23,7 @@
 
 .game-container .tab-container .tab-notification {
   position: absolute;
-  right: calc(50% - 20px);
+  right: calc(50% - 12px);
   top: 10px;
 }
 
@@ -32,8 +32,8 @@
 }
 
 .game-container .tab-container .tab-icon {
-  height: 50px;
-  width: 50px;
+  height: 32px;
+  width: 32px;
   margin: 5px;
 }
 

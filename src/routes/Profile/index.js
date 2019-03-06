@@ -46,13 +46,11 @@ function Profile(props) {
   return (
     <div className="root-container">
       <div className="info-container">
-        <div className="landing__blurb-title">Profile</div>
-        <div className="landing__blurb">
-          Choose an avatar and a handle for your profile
-        </div>
+        <div className="title">Profile</div>
+        <p>Choose an avatar and a handle for your profile</p>
       </div>
       <div className="user-input-container user-input-container-profile-page">
-        <div className="user-input-container__top">
+        <div className="user-input-container">
           <div className="input-label">Avatar</div>
           <div className="user-input-field">
             {Array.from({ length: 15 }).map((v, i) => {
@@ -89,9 +87,9 @@ function Profile(props) {
         </div>
       </div>
       <div className="action-container">
-        <div className="action__submit-label">START</div>
+        <div className="submit-label">START</div>
         <IconButton
-          className="action__submit-button"
+          className="submit-button"
           onClick={async e => {
             let response = await updateProfile(bio, selectedAvatar);
             if (response.handle === bio) {
@@ -101,7 +99,7 @@ function Profile(props) {
             }
           }}
         >
-          <ArrowForward className="action__arrow-forward-icon" />
+          <ArrowForward className="arrow-forward-icon" />
         </IconButton>
       </div>
     </div>

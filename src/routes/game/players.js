@@ -31,6 +31,7 @@ export function Players(props) {
     players,
     rtcReady,
     onCallPlayer,
+    onHangUp,
     onAnswerCall,
     localStream,
     remoteStreams,
@@ -100,7 +101,7 @@ export function Players(props) {
           </Button>
         </div>
       ) : null}
-      {localStream ? renderLocalStreamVideo(() => {}, localVideo) : null}
+      {localStream ? renderLocalStreamVideo(onHangUp, localVideo) : null}
       {remoteStreams ? renderRemoteStreamsVideo(remoteVideo) : null}
     </div>
   );
