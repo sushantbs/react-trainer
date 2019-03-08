@@ -50,7 +50,7 @@ function App(props) {
   const connectSocket = () => {
     if (!socket) {
       const connect = io("/", {
-        path: "/api/socket"
+        path: "/socket"
       });
 
       connect.on("turn", state => {

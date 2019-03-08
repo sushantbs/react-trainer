@@ -29,6 +29,7 @@ function renderRemoteStreamsVideo(remoteVideo) {
 export function Players(props) {
   const {
     players,
+    me,
     rtcReady,
     onCallPlayer,
     onHangUp,
@@ -77,7 +78,7 @@ export function Players(props) {
                 </div>
               }
             />
-            {rtcReady && player.rtcReady ? (
+            {rtcReady && player.rtcReady && player.id !== me.id ? (
               <div className="player-comm">
                 <Button onClick={() => onCallPlayer(player.id)}>
                   <CallRounded size="medium" />

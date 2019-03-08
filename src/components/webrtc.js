@@ -3,7 +3,7 @@ const webrtc = (
   me,
   { setRTCReady, setLocalStream, setIncomingRTCRequest, addNewRemoteStream }
 ) => {
-  const constraints = { video: true };
+  const constraints = { video: true, audio: true };
   // const servers = {
   //   iceServers: [
   //     {
