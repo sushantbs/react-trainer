@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Route, withRouter } from "react-router-dom";
-import MuiRoot from "./withMui";
-import { withStyles } from "@material-ui/core";
-import { Register } from "./routes/register";
-import { Game } from "./routes/game";
-import { ThemePicker } from "./components/ThemePicker";
-import Profile from "./routes/profile";
 import io from "socket.io-client";
-
-import webrtc from "./components/webrtc";
+import { withStyles } from "@material-ui/core";
 
 import "./App.css";
+import MuiRoot from "./withMui";
+
+import { Register } from "./routes/register";
+import { Game } from "./routes/game";
+import Profile from "./routes/profile";
+
+import { ThemePicker } from "./components/ThemePicker";
+import webrtc from "./components/webrtc";
 
 const styles = theme => {
   return {
@@ -50,7 +51,7 @@ function App(props) {
   const connectSocket = () => {
     if (!socket) {
       const connect = io("/", {
-        path: "/socket"
+        path: "/api/socket"
       });
 
       connect.on("turn", state => {

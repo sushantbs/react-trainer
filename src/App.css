@@ -37,6 +37,7 @@
   width: 100%;
   display: flex;
   position: relative;
+  justify-content: center;
 }
 
 .theme-picker-container {
@@ -108,7 +109,6 @@
 .register__input-container {
 }
 
-.register__input-label,
 .input-label {
   color: #232833;
   text-transform: uppercase;
@@ -117,21 +117,6 @@
   font-weight: 700;
   line-height: 1.5;
   margin-bottom: 16px;
-}
-
-.register__input input,
-.register__input textarea:last-child {
-  background: transparent;
-  padding: 0.25rem 0;
-  padding-left: 1.25rem;
-  display: block;
-  box-sizing: border-box;
-  color: #2b303d;
-  letter-spacing: 0.02rem;
-  font-size: 69px !important;
-  line-height: 76px;
-  font-family: "GT Eesti Display" !important;
-  font-weight: 700 !important;
 }
 
 .register__input-field,
@@ -172,19 +157,6 @@
   display: flex;
   flex-wrap: wrap;
   margin-bottom: 48px;
-}
-
-.textarea:last-child {
-  background: transparent;
-  padding: 0.25rem 0;
-  padding-left: 1.25rem;
-  display: block;
-  box-sizing: border-box;
-  color: #2b303d;
-  letter-spacing: 0.02rem;
-  font-size: 69px !important;
-  font-family: "GT Eesti Display" !important;
-  font-weight: 700 !important;
 }
 
 .root-container {

@@ -1,10 +1,24 @@
 import React, { useState } from "react";
-import ArrowForward from "@material-ui/icons/ArrowForward";
-import { IconButton, InputBase, Avatar, withStyles } from "@material-ui/core";
+import {
+  Button,
+  InputBase,
+  Avatar,
+  withStyles,
+  Typography,
+  Paper
+} from "@material-ui/core";
 import MuiRoot from "../../withMui";
 
 const styles = theme => {
   return {
+    root: {
+      width: "100%",
+      marginBottom: "10px",
+      padding: "5px"
+    },
+    input: {
+      fontSize: "60px"
+    },
     bigAvatar: {
       margin: 10,
       width: 60,
@@ -44,51 +58,47 @@ function Profile(props) {
   const [selectedAvatar, setSelectedAvatar] = useState("a0");
 
   return (
-    <div className="root-container">
-      <div className="info-container">
-        <div className="title">Profile</div>
-        <p>Choose an avatar and a handle for your profile</p>
-      </div>
-      <div className="user-input-container user-input-container-profile-page">
-        <div className="user-input-container">
-          <div className="input-label">Avatar</div>
-          <div className="user-input-field">
-            {Array.from({ length: 15 }).map((v, i) => {
-              const avatarName = `a${i}`;
-              const isSelected = avatarName === selectedAvatar ? true : false;
-              let classNames = `${classes.bigAvatar}`;
-              if (isSelected) {
-                classNames = ` ${classNames} ${classes.selectedAvatar}`;
-              }
-              return (
-                <Avatar
-                  key={`avatar-${i}`}
-                  src={`https://api.adorable.io/avatars/200/${avatarName}@adorable.io.png`}
-                  className={classNames}
-                  onClick={() => {
-                    setSelectedAvatar(avatarName);
-                  }}
-                />
-              );
-            })}
-          </div>
-          <div className="input-label">Handle</div>
-          <div className="user-input-field">
-            <InputBase
-              value={bio}
-              multiline
-              rows="2"
-              autoFocus={true}
-              onChange={event => {
-                setBio(event.target.value);
-              }}
-            />
-          </div>
+    <div className="profile-container">
+      <Paper className={classes.root} elevation={1}>
+        <Typography variant="h5"> Avatar </Typography>
+        <div className="user-input-field">
+          {Array.from({ length: 15 }).map((v, i) => {
+            const avatarName = `a${i}`;
+            const isSelected = avatarName === selectedAvatar ? true : false;
+            let classNames = `${classes.bigAvatar}`;
+            if (isSelected) {
+              classNames = ` ${classNames} ${classes.selectedAvatar}`;
+            }
+            return (
+              <Avatar
+                key={`avatar-${i}`}
+                src={`https://api.adorable.io/avatars/200/${avatarName}@adorable.io.png`}
+                className={classNames}
+                onClick={() => {
+                  setSelectedAvatar(avatarName);
+                }}
+              />
+            );
+          })}
         </div>
-      </div>
+      </Paper>
+      <Paper className={classes.root} elevation={1}>
+        <Typography variant="h5">Handle</Typography>
+        <div className="user-input-field">
+          <InputBase
+            className={classes.input}
+            value={bio}
+            autoFocus={true}
+            onChange={event => {
+              setBio(event.target.value);
+            }}
+          />
+        </div>
+      </Paper>
       <div className="action-container">
-        <div className="submit-label">START</div>
-        <IconButton
+        <Button
+          color="primary"
+          variant="contained"
           className="submit-button"
           onClick={async e => {
             let response = await updateProfile(bio, selectedAvatar);
@@ -99,8 +109,8 @@ function Profile(props) {
             }
           }}
         >
-          <ArrowForward className="arrow-forward-icon" />
-        </IconButton>
+          START
+        </Button>
       </div>
     </div>
   );

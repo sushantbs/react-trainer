@@ -35,16 +35,18 @@ http {
 
       # 
       # proxy the api calls to Node server listening on 127.0.0.1:3000
-      location /api {
-          proxy_pass https://nodetrainer.herokuapp.com;
-          proxy_redirect off;
+      #
+      location ^~ /api/ {
+          # proxy_pass https://nodetrainer.herokuapp.com;
+          proxy_pass http://0.0.0.0:3000;
       }
 
-      location /socket {
+      location ^~ /api/socket {
           proxy_http_version 1.1;
           proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-          proxy_pass https://nodetrainer.herokuapp.com/socket;
+          proxy_set_header Connection "Upgrade";
+          # proxy_pass https://nodetrainer.herokuapp.com;
+          proxy_pass http://0.0.0.0:3000;
       }
     }
 }
