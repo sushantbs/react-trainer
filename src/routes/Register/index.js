@@ -86,7 +86,7 @@ export const Register = withStyles(style)(({ onRegister, classes }) => {
           onClick={async e => {
             let response = await createRoomRequest(roomType);
             if (response.accessKey) {
-              onRegister();
+              onRegister(response.accessKey);
             }
           }}
         />

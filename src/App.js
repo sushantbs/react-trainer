@@ -89,7 +89,9 @@ function App(props) {
   const [newRemoteStream, addNewRemoteStream] = useState(null);
   const [incomingRTCRequest, setIncomingRTCRequest] = useState(null);
 
-  const onRegister = () => {
+  const onRegister = accessKey => {
+    setAccessKey(accessKey);
+
     if (!socket) {
       connectSocket();
     }
