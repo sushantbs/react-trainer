@@ -15,12 +15,16 @@ import webrtc from "./components/webrtc";
 
 const styles = theme => {
   return {
-    root: {}
+    root: {
+      [theme.breakpoints.down("xs")]: {
+        flexDirection: "column"
+      }
+    }
   };
 };
 
 function App(props) {
-  const { history, onThemeChange, themeOptions } = props;
+  const { history, onThemeChange, themeOptions, classes } = props;
   const checkUserStatus = async () => {
     setAuthStatus("inprogress");
     let response = await fetch("/api/status", {
@@ -201,7 +205,7 @@ function App(props) {
   return (
     <>
       {authStatus === "complete" ? (
-        <div className="main-container">
+        <div className={`main-container ${classes.root}`}>
           <Route
             path="/profile"
             render={props => (

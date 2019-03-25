@@ -116,12 +116,6 @@
   margin-bottom: 16px;
 }
 
-.register__input-field,
-.user-input-field {
-  display: flex;
-  align-items: center;
-}
-
 .register__input-field .register__input-icon,
 .user-input-container .user-input-icon {
   font-size: 62px;

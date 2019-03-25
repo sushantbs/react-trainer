@@ -3,13 +3,22 @@ import { withStyles } from "@material-ui/core/styles";
 import "./index.css";
 
 const style = theme => ({
-  section: {
-    "flex-basis": "50%",
+  root: {
     display: "flex",
-    "flex-direction": "column",
+    flexDirection: "row",
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column"
+    },
     "justify-content": "center",
-    "align-items": "center",
-    height: "100%",
+    "align-items": "stretch",
+    "flex-grow": 1
+  },
+  section: {
+    display: "flex",
+    flexDirection: "column",
+    "justify-content": "center",
+    alignItems: "center",
+    flexBasis: "50%",
     color: theme.palette.text.primary
   },
   join: {
@@ -47,11 +56,12 @@ const createRoomRequest = async type => {
 };
 
 export const Register = withStyles(style)(({ onRegister, classes }) => {
+  // const theme = useTheme();
   const [accessKey, setAccessKey] = useState("");
   const [roomType, setRoomType] = useState("0");
 
   return (
-    <div className="register-container">
+    <div className={`register-container ${classes.root}`}>
       <div className={[classes.section, classes.join].join(" ")}>
         <header>Join an existing game</header>
         <input

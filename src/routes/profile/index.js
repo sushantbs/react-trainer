@@ -7,7 +7,6 @@ import {
   Typography,
   Paper
 } from "@material-ui/core";
-import MuiRoot from "../../withMui";
 
 const styles = theme => {
   return {
@@ -15,6 +14,11 @@ const styles = theme => {
       width: "100%",
       marginBottom: "10px",
       padding: "5px"
+    },
+    section: {
+      display: "flex",
+      alignItems: "center",
+      flexWrap: "wrap"
     },
     input: {
       fontSize: "60px"
@@ -61,7 +65,7 @@ function Profile(props) {
     <div className="profile-container">
       <Paper className={classes.root} elevation={1}>
         <Typography variant="h5"> Avatar </Typography>
-        <div className="user-input-field">
+        <div className={classes.section}>
           {Array.from({ length: 15 }).map((v, i) => {
             const avatarName = `a${i}`;
             const isSelected = avatarName === selectedAvatar ? true : false;
@@ -84,7 +88,7 @@ function Profile(props) {
       </Paper>
       <Paper className={classes.root} elevation={1}>
         <Typography variant="h5">Handle</Typography>
-        <div className="user-input-field">
+        <div className={classes.section}>
           <InputBase
             className={classes.input}
             value={bio}
@@ -116,4 +120,4 @@ function Profile(props) {
   );
 }
 
-export default withStyles(styles)(MuiRoot(Profile));
+export default withStyles(styles)(Profile);
