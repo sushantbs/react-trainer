@@ -23,6 +23,11 @@ function ChatComponent({
 }) {
   const [message, setMessage] = useState("");
 
+  const sendMessage = () => {
+    onMessage(message);
+    setMessage("");
+  };
+
   useEffect(() => {
     onRead(true);
 
@@ -73,16 +78,12 @@ function ChatComponent({
           value={message}
           onKeyPress={e => {
             if (e.charCode === 13) {
-              onMessage(message);
-              setMessage("");
+              sendMessage();
             }
           }}
           onChange={e => setMessage(e.target.value)}
         />
-        <ArrowRightRounded
-          className="send-icon"
-          onClick={() => message && onMessage(message)}
-        />
+        <ArrowRightRounded className="send-icon" onClick={sendMessage} />
       </div>
     </div>
   );
