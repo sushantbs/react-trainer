@@ -22,10 +22,12 @@ const style = theme => ({
     color: theme.palette.text.primary
   },
   join: {
-    backgroundColor: theme.palette.primary.light
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText
   },
   create: {
-    backgroundColor: theme.palette.secondary.light
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText
   }
 });
 
@@ -86,8 +88,9 @@ export const Register = withStyles(style)(({ onRegister, classes }) => {
         <header>Create a new game</header>
         <select value={roomType} onChange={e => setRoomType(e.target.value)}>
           <option value="0">Select a Room</option>
-          <option value="1">Room Type 1</option>
-          <option value="2">Room Type 2</option>
+          <option value="1">Mafia</option>
+          <option value="2">Poker</option>
+          <option value="3">Menti</option>
         </select>
         <input
           type="button"

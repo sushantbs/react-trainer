@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { grey, green, indigo, orange } from "@material-ui/core/colors";
+import { indigo, orange } from "@material-ui/core/colors";
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 // A theme with custom primary and secondary color.
@@ -14,22 +14,21 @@ const themeOptions = [
       palette: {
         type: "dark",
         primary: {
-          light: green[300],
-          main: green[500],
-          dark: green[700],
-          contrastText: "#fff"
+          main: "#4CB963",
+          dark: "#34623F",
+          contrastText: "#E9F2CB"
         },
         secondary: {
-          light: grey[300],
-          main: grey[500],
-          dark: grey[700]
+          main: "#2D3142",
+          contrastText: "#E8E8ED"
         },
         text: {
-          primary: "#ffffff"
+          primary: "#E9F2CB",
+          secondary: "#E8E8ED"
         },
         background: {
-          paper: green[700],
-          default: grey[500]
+          paper: "#34623F",
+          default: "#E8E8ED"
         }
       },
       typography: {
@@ -44,13 +43,11 @@ const themeOptions = [
       palette: {
         primary: {
           light: orange[300],
-          main: orange[500],
+          main: "#2D3142",
           dark: orange[700]
         },
         secondary: {
-          light: indigo[300],
-          main: indigo[500],
-          dark: indigo[700]
+          main: "#B0D7FF"
         },
         text: {
           primary: "#ffffff"
