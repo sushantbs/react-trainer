@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { withStyles } from "@material-ui/core";
 
 import "./App.css";
@@ -25,9 +25,13 @@ function App(props) {
   };
 
   return (
-    <>
-      <Register {...props} onRegister={onRegister} />
-    </>
+    <div className={`App main-container ${classes.root}`}>
+      {accessKey ? (
+        <div> Access key: {accessKey} </div>
+      ) : (
+        <Register {...props} onRegister={onRegister} />
+      )}
+    </div>
   );
 }
 

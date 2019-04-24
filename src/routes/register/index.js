@@ -58,9 +58,10 @@ const createRoomRequest = async type => {
 };
 
 export const Register = withStyles(style)(({ onRegister, classes }) => {
-  // const theme = useTheme();
   const [accessKey, setAccessKey] = useState("");
   const [roomType, setRoomType] = useState("0");
+  const [joining, setJoining] = useState(false);
+  const [creating, setCreating] = useState(false);
 
   return (
     <div className={`register-container ${classes.root}`}>
@@ -74,9 +75,10 @@ export const Register = withStyles(style)(({ onRegister, classes }) => {
         />
         <input
           type="button"
-          value="Join"
-          disabled={accessKey.length !== 5}
+          value={joining ? "Joining..." : "Join"}
+          disabled={joining || creating || accessKey.length !== 5}
           onClick={async e => {
+            setJoining(true);
             let response = await joinRoomRequest(accessKey);
             if (response.accessKey) {
               onRegister();
@@ -94,9 +96,10 @@ export const Register = withStyles(style)(({ onRegister, classes }) => {
         </select>
         <input
           type="button"
-          value="Create"
-          disabled={!Boolean(roomType !== "0")}
+          value={creating ? "Creating..." : "Create"}
+          disabled={joining || creating || Boolean(roomType === "0")}
           onClick={async e => {
+            setCreating(true);
             let response = await createRoomRequest(roomType);
             if (response.accessKey) {
               onRegister(response.accessKey);
