@@ -33,6 +33,9 @@ const themeOptions = [
       },
       typography: {
         useNextVariants: true
+      },
+      fontSizes: {
+        small: "10px"
       }
     })
   },
