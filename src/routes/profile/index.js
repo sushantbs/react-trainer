@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { withStyles } from "@material-ui/core";
 // import Camera, { FACING_MODES } from "react-html5-camera-photo";
 import { Camera } from "../../components/capture-photo";
@@ -69,9 +69,17 @@ function ProfileComponent(props) {
   };
 
   const sketchOnChange = async () => {
-    const avatarDataURL = sketchElement.current.toDataURL();
-    setAvatar(avatarDataURL);
+    // this handler is also called when sketch is removed. e.g when user clicks "Take Photo"
+    if (sketchElement.current) {
+      const avatarDataURL = sketchElement.current.toDataURL();
+      setAvatar(avatarDataURL);
+    }
   };
+
+  useEffect(() => {
+    sketchElement.current &&
+      sketchElement.current.setBackgroundFromDataUrl(avatar);
+  }, [avatar]);
 
   return (
     <div className={classes.root}>
