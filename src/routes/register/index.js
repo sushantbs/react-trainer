@@ -45,6 +45,9 @@ const joinRoomRequest = async accessKey => {
 };
 
 const createRoomRequest = async type => {
+  // return await new Promise(function(resolve, reject) {
+  //   setTimeout(() => resolve({ accessKey: "ABCDE" }), 2000);
+  // });
   const response = await fetch("/api/create", {
     method: "POST",
     headers: {

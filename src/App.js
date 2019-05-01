@@ -49,24 +49,22 @@ function App(props) {
   return (
     <div className={`App main-container ${classes.root}`}>
       {accessKey ? (
-        <div>
-          <Switch>
-            <Route
-              path="/profile"
-              render={props => <Profile onProfileUpdate={onProfileUpdate} />}
-            />
-            <Route
-              path="/game"
-              render={props => <Game {...gameState} onGameEnd={onGameEnd} />}
-            />
-            <Route
-              exact
-              path="/"
-              render={props => <Game {...gameState} onGameEnd={onGameEnd} />}
-            />
-            <Route component={() => <div>Why are you here</div>} />
-          </Switch>
-        </div>
+        <Switch>
+          <Route
+            path="/profile"
+            render={props => <Profile onProfileUpdate={onProfileUpdate} />}
+          />
+          <Route
+            path="/game"
+            render={props => <Game {...gameState} onGameEnd={onGameEnd} />}
+          />
+          <Route
+            exact
+            path="/"
+            render={props => <Game {...gameState} onGameEnd={onGameEnd} />}
+          />
+          <Route component={() => <div>Why are you here</div>} />
+        </Switch>
       ) : (
         <Register {...props} onRegister={onRegister} />
       )}
